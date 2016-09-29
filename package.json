@@ -1,0 +1,26 @@
+{
+  "name": "roku-remote",
+  "version": "0.1.0",
+  "description": "",
+  "dependencies": {},
+  "devDependencies": {
+    "node-roku": "^0.0.10",
+    "request": "^2.75.0",
+    "xml2json": "^0.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darkwing/roku-remote"
+  },
+  "keywords": [
+    "roku",
+    "remote",
+    "control"
+  ],
+  "author": "David Walsh",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/darkwing/roku-remote/issues"
+  },
+  "homepage": "https://github.com/darkwing/roku-remote#readme"
+}

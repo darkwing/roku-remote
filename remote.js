@@ -1,4 +1,9 @@
-// http://stackoverflow.com/questions/5006821/nodejs-how-to-read-keystrokes-from-stdin
+'use strict';
+
+/*
+  Created by David Walsh - https://davidwalsh.name
+  Happy Streaming!
+*/
 
 const readline = require('readline');
 
@@ -7,7 +12,7 @@ const Roku = require('node-roku');
 const xml2json = require('xml2json');
 
 // Will be populated once a device is found
-var address;
+let address = null;
 
 // Map to this URL: http://******:8060/keypress/{key}
 const keyEndpoint = {
@@ -57,17 +62,15 @@ Roku.find((err, devices) => {
 
   address = devices[0];
   Roku.getDevice(address, (err, deviceDetail) => {
-    console.log('Connected to Device: ', xmlToObject(deviceDetail).root.device.friendlyName, ' (', devices[0],')');
+    console.log('Connected to Device: ', xmlToObject(deviceDetail).root.device.friendlyName, ' (', devices[0], ')');
     console.log('Press keys to navigate the Roku and select content!');
   });
 });
 
 // Start the keypress listener
 process.stdin.on('keypress', (str, key) => {
-  var endpoint;
-
   // Ignore everything until we're connected
-  if(!address) {
+  if(address === null) {
     return;
   }
 
@@ -77,9 +80,9 @@ process.stdin.on('keypress', (str, key) => {
   }
 
   // Handle commands
-  endpoint = keyEndpoint[key.name] || keyEndpoint[key.sequence] || 'Lit_' + key.name;
+  let endpoint = keyEndpoint[key.name] || keyEndpoint[key.sequence] || 'Lit_' + key.name;
 
-  // Not sure how "undefined" happens but it does; ignore those;
+  // Ignore undefined keypresses (no name or sequence)
   if(endpoint === 'Lit_undefined') {
     return;
   }
